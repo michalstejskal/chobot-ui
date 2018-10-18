@@ -1,0 +1,90 @@
+html {
+  font-family: "Arial Narrow", serif;
+  /*font-family: 'Open Sans', sans-serif;*/
+  padding: 16px;
+  background-size: auto, cover;
+  background: #ffffff fixed, fixed center center, center, center;
+  height: 100%;
+}
+
+.windowContainer {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -20px;
+}
+
+.windowContainer:after {
+  content: "";
+  display: block;
+}
+
+.window{
+  font-family: "Arial Narrow", serif;
+  /*font-family: 'Open Sans', sans-serif;*/
+  padding: 16px;
+  background-size: auto, cover;
+  background: #ffffff fixed, fixed center center, center, center;
+  height: 100%;
+}
+
+.footer {
+  position: relative;
+  margin-top: -200px; /* negative value of footer height */
+  height: 20px;
+  clear: both;
+}
+
+.header {
+  width: 90%;
+  text-align: right;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+
+/*################################################################################*/
+
+.container {
+  width: 90%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.navigation {
+  position: absolute;
+  top: 15%;
+
+}
+
+/*.window {*/
+/*margin: 30px 70px;*/
+/*}*/
+
+.logo {
+  width: 10%;
+  float: left;
+}
+
+.dashboardName {
+  font-size: large;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+aside {
+  font-family: "Arial Narrow", serif;
+  color: white;
+  background-color: #eeeeee;
+  position: fixed;
+  width: 70px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  /*border: 1px solid #111;*/
+}
+
+.window {
+  margin: 30px 70px;
+}
