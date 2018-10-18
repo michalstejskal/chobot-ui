@@ -1,0 +1,44 @@
+<div class="edit-container" *ngIf="network != null">
+  <mat-form-field>
+    <input matInput placeholder="name" [(ngModel)]="network.name">
+  </mat-form-field>
+
+  <mat-form-field *ngIf="types != null">
+    <mat-select placeholder="type of network" [(ngModel)]="network.type">
+      <mat-option *ngFor="let type of types" [value]="type" ngDefaultControl>
+        {{type.name | networkTypePipe}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div *ngIf="network.type != null">
+
+    <div class="edit-container" *ngIf="network.type != null">
+      <mat-form-field *ngIf="network.type.name == 'log' || network.type.name == 'image'">
+        <input matInput placeholder="training data file" [(ngModel)]="hidden" [disabled]=true>
+        <button mat-flat-button (click)="inputFile.click()" [disabled]="trainingData.length != 0">Import file</button>
+        {{ inputFile.value }}
+      </mat-form-field>
+
+      <input #inputFile type="file" (change)="onChange($event)" [style.display]="'none'">
+    <!--</div>-->
+
+    <!--<div class="edit-container" *ngIf="network.type != null">-->
+      <mat-form-field *ngIf="network.type.name == 'chatbot'">
+      <textarea matInput placeholder="training data" *ngIf="network != null" [(ngModel)]="trainingData"
+                [disabled]="files"></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+
+</div>
+
+<button mat-flat-button (click)="saveAndValidate()">save</button>
+
+
+
+
+
+
+
+
