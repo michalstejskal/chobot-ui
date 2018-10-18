@@ -1,0 +1,62 @@
+<mat-tab-group>
+  <mat-tab label="info">
+    <div class="edit-container" *ngIf="module != null">
+      <mat-form-field>
+        <input matInput placeholder="name" [(ngModel)]="module.name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="response class" [(ngModel)]="module.responseClass">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="version" [(ngModel)]="module.actualVersion.name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="type" [(ngModel)]="module.type">
+          <mat-option *ngFor="let type of moduleTypes;" [value]="type.id">
+            {{type.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="module.type == 1">
+        <input matInput placeholder="git repository" [(ngModel)]="module.repositoryUrl">
+      </mat-form-field>
+
+      <mat-form-field *ngIf="module.type == 2">
+        <input matInput placeholder="docker image" [(ngModel)]="module.imageId">
+      </mat-form-field>
+    </div>
+    <button mat-flat-button (click)="saveAndValidate()">save</button>
+  </mat-tab>
+  <mat-tab label="source code">
+    <div class="edit-container" *ngIf="module != null">
+      <div ace-editor
+           [(text)]="module.code"
+           [mode]="'python'"
+           [theme]="'monokai'"
+           [options]="options"
+           [readOnly]="false"
+           [autoUpdateContent]="true"
+           [durationBeforeCallback]="1000"
+           (textChanged)="onChange($event)"
+           style="min-height: 80vh; max-height: 80vh; width:100%; overflow: auto;">
+      </div>
+
+    </div>
+  </mat-tab>
+
+</mat-tab-group>
+
+
+
+
+
+
+
+
+
+
+
