@@ -1,0 +1,18 @@
+.edit-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-container > * {
+  width: 100%;
+}
+
+.mat-flat-button{
+  float: right;
+}
+.example-button-row { display: flex; align-items: center; justify-content: space-around; }
+
+.space-container > * {
+  width: 100%;
+  padding-bottom: 20%;
+}
