@@ -1,0 +1,82 @@
+<mat-tab-group>
+  <mat-tab label="info">
+    <div class="edit-container" *ngIf="module != null">
+      <mat-form-field>
+        <input matInput placeholder="name" [value]="module.name"  disabled="true" class="disabled_show">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="response class" [value]="module.responseClass">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="version" [value]="module.actualVersion.name"  disabled="true" class="disabled_show">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="status" [value]="module.status | statusPipe" disabled="true" class="disabled_show">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="type" [value]="module.type | moduleTypePipe" disabled="true" class="disabled_show">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="connection" [value]="module.connectionUri" disabled="true" class="disabled_show">
+      </mat-form-field>
+
+      <mat-form-field *ngIf="module.type == 1">
+        <input matInput placeholder="git repository" [(ngModel)]="module.repositoryUrl">
+      </mat-form-field>
+
+      <mat-form-field *ngIf="module.type == 2">
+        <input matInput placeholder="docker image" [(ngModel)]="module.imageId">
+      </mat-form-field>
+    </div>
+    <div *ngIf="module != null">
+      <div *ngIf=" module.status== 4">
+        <button mat-flat-button (click)="undeploy()" [disabled]="showProgress">undeploy</button>
+      </div>
+
+      <div *ngIf="module.status != 4">
+        <button mat-flat-button (click)="deploy()" [disabled]="showProgress">deploy</button>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="source code">
+    <div class="edit-container" *ngIf="module != null">
+      <div ace-editor
+           [(text)]="module.code"
+           [mode]="'python'"
+           [theme]="'monokai'"
+           [options]="options"
+           [readOnly]="false"
+           [autoUpdateContent]="true"
+           [durationBeforeCallback]="1000"
+           (textChanged)="onChange($event)"
+           style="min-height: 80vh; max-height: 80vh; width:100%; overflow: auto;">
+      </div>
+
+    </div>
+  </mat-tab>
+  <mat-tab label="logs">
+    <div class="logs" style="min-height: 80vh ;max-height: 80vh;">
+      <mat-form-field class="logs-disabled_show">
+        <textarea autosize matInput [value]="logs" [disabled]="true" class="disabled-logs"></textarea>
+      </mat-form-field>
+    </div>
+  </mat-tab>
+
+
+</mat-tab-group>
+
+
+
+
+
+
+
+
+
+
+

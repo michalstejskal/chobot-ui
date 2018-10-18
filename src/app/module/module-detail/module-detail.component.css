@@ -1,0 +1,37 @@
+.edit-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-container > * {
+  width: 100%;
+}
+
+.mat-flat-button {
+  float: right;
+}
+
+.disabled_show {
+  color: black;
+}
+
+.logs {
+  padding-top: 2%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 120%;
+}
+
+.logs-disabled_show {
+  padding-left: 1%;
+  border-radius: 5px;
+  width: 99%;
+  /*background: #333;*/
+  background: #272822;
+  color: #F8F8F2;
+  font-family: "Roboto Mono Regular", monospace;;
+}
+
+.disabled-logs {
+  color: white;
+  font-family: "Roboto Mono Regular", monospace;;
+}
