@@ -14,7 +14,7 @@
   <div *ngIf="network.type != null">
 
     <div class="edit-container" *ngIf="network.type != null">
-      <mat-form-field *ngIf="network.type.name == 'log' || network.type.name == 'image'">
+      <mat-form-field *ngIf="network.type.name == 'log' || network.type.name == 'image' || network.type.name == 'chatbot'">
         <input matInput placeholder="training data file" [(ngModel)]="hidden" [disabled]=true>
         <button mat-flat-button (click)="inputFile.click()" [disabled]="trainingData.length != 0">Import file</button>
         {{ inputFile.value }}
@@ -24,10 +24,10 @@
     <!--</div>-->
 
     <!--<div class="edit-container" *ngIf="network.type != null">-->
-      <mat-form-field *ngIf="network.type.name == 'chatbot'">
-      <textarea matInput placeholder="training data" *ngIf="network != null" [(ngModel)]="trainingData"
-                [disabled]="files"></textarea>
-      </mat-form-field>
+      <!--<mat-form-field *ngIf="network.type.name == 'chatbot'">-->
+      <!--<textarea matInput placeholder="training data" *ngIf="network != null" [(ngModel)]="trainingData"-->
+                <!--[disabled]="files"></textarea>-->
+      <!--</mat-form-field>-->
     </div>
   </div>
 

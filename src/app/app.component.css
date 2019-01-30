@@ -27,12 +27,6 @@ html {
   height: 100%;
 }
 
-.footer {
-  position: relative;
-  margin-top: -200px; /* negative value of footer height */
-  height: 20px;
-  clear: both;
-}
 
 .header {
   width: 90%;
@@ -54,17 +48,28 @@ html {
 
 .navigation {
   position: absolute;
-  top: 15%;
-
+  top: 17%;
+  left: 20%;
 }
 
-/*.window {*/
-/*margin: 30px 70px;*/
-/*}*/
+.navigation_container {
+  width: 200px;
+}
+
+
+.navigation_item{
+  color: #000000;
+  /*color: #637282;*/
+  text-decoration: none;
+  display: block;
+}
+
 
 .logo {
-  width: 10%;
-  float: left;
+  width: 80px;
+  left: 15%;
+  top: 5%;
+  position: absolute;
 }
 
 .dashboardName {
@@ -86,5 +91,5 @@ aside {
 }
 
 .window {
-  margin: 30px 70px;
+  margin: 30px 200px;
 }

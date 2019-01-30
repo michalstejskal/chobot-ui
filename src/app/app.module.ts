@@ -16,6 +16,7 @@ import {NetworkDetailAddComponent} from './network/network-detail-add/network-de
 import {ModuleDetailAddComponent} from './module/module-detail-add/module-detail-add.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule, FormGroup} from '@angular/forms';
+
 import {
   MatAutocompleteModule,
   MatBadgeModule,
@@ -128,7 +129,7 @@ import {ModuleTypePipe} from './shared/pipes/module-type-pipe';
     MatTreeModule,
     AutosizeModule,
     AceEditorModule,
-    routingModule
+    routingModule,
   ],
   providers: [
     UsersService,

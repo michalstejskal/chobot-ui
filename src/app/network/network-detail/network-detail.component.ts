@@ -23,10 +23,7 @@ export class NetworkDetailComponent implements OnInit {
   showProgress: boolean;
   curl: string;
   displayedColumns: string[] = ['name', 'type', 'status'];
-  example = 'import requests\n' +
-    '        url = \'http://file.api.wechat.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE\'\n' +
-    '        files = {\'media\': open(\'test.jpg\', \'rb\')}\n' +
-    '        requests.post(url, files=files)';
+  options: any = {maxLines: 10, printMargin: false, showPrintMargin: false, showLineNumbers: false, showGutter: false, wrap: 100};
 
   constructor(public snackBar: MatSnackBar,
               private networkService: NetworkService,
@@ -69,13 +66,22 @@ export class NetworkDetailComponent implements OnInit {
   }
 
   undeploy() {
-    console.log('TBD');
-    this.openSnackBar('Undeploying network', '');
+    this.networkService.undeploy(this.id).subscribe(network => {
+      this.network = network;
+      this.checkHealtz();
+      this.curl = '';
+      this.openSnackBar('Network undeploying', '');
+    });
   }
 
   adviseCurl() {
+    if (this.network.type.name === 'chatbot') {
+      return 'curl  -X POST -H "Authorization: ' + this.network.apiKey +
+        '" -H "Secret: $USER_SECRET"  --data \'{"message":"hello world"}\' \'' + this.network.connectionUri + 'network/predict\' -H "Content-Type: application/json"';
+    }
+
     return 'curl  -X POST -H "Authorization: ' + this.network.apiKey +
-      '" -H "Secret: $USER_SECRET=" -F input=@FILE.jpg \'' + this.network.connectionUri + 'network/predict/\'';
+      '" -H "Secret: $USER_SECRET" -F input=@FILE.jpg \'' + this.network.connectionUri + 'network/predict\'';
   }
 
   deploy() {

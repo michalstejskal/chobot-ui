@@ -59,8 +59,11 @@ export class ModuleDetailComponent implements OnInit {
   }
 
   undeploy() {
-    this.showProgress = false;
-    console.log('tbd');
+    this.moduleService.undeploy(this.idNetwork, this.module.id).subscribe(module => {
+      this.module = module;
+      this.openSnackBar('Module undeploying', '');
+    });
+
   }
 
   onChange(code) {

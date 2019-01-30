@@ -98,4 +98,11 @@ export class NetworkService {
       );
   }
 
+  undeploy(idNetwork: number){
+    return this.http.delete<Network>(API_ROOT_DOMAIN + 'user/' + AuthService.getLoggedUser().id + '/network/' + idNetwork)
+      .pipe(
+        catchError(this.handleError('getNetwork', null))
+      );
+  }
+
 }

@@ -59,23 +59,37 @@ p {
   font-family: "Roboto Mono Regular", monospace;;
 }
 
-
 table {
   width: 100%;
 }
 
-
-table  {
+table {
   transition: none !important;
   box-shadow: none !important;
   padding-bottom: 1em;
 }
 
-.mat-flat-button{
+.mat-flat-button {
   float: right;
 }
 
-.curl{
+.curl {
   font-size: 80%;
   padding-top: 2%;
+}
+
+.curl-container {
+  /*padding-top: 20px;*/
+  width: 100%;
+}
+
+.curl_editor {
+  min-height: 10vh;
+  max-height: 2vh;
+  width: 100%;
+  overflow: scroll;
+}
+
+.action_button_container{
+  padding-top: 20px;
 }

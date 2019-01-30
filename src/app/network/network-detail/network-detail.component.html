@@ -1,5 +1,5 @@
 <mat-tab-group>
-  <mat-tab label="info">
+  <mat-tab label="information">
 
     <!--<div *ngIf="showProgress" class="deploy-process">-->
     <!--&lt;!&ndash;<mat-spinner></mat-spinner>&ndash;&gt;-->
@@ -28,7 +28,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="connenction" [value]="network.connectionUri" [disabled]="true"
+        <input matInput placeholder="connection uri" [value]="network.connectionUri" [disabled]="true"
                class="disabled_show">
       </mat-form-field>
 
@@ -37,13 +37,31 @@
                class="disabled_show">
       </mat-form-field>
 
+      <div *ngIf="network != null" class="curl">
+        <div *ngIf=" network.status== 4">
+          <div class="curl-container">
+            <div ace-editor
+                 [(text)]="curl"
+                 [mode]="'python'"
+                 [options]="options"
+                 [readOnly]="true"
+                 [autoUpdateContent]="true"
+                 [durationBeforeCallback]="1000"
+                 class="curl_editor">
+            </div>
+
+          </div>
+        </div>
+      </div>
+
       <!--<mat-form-field>-->
       <!--<input matInput placeholder="api key secret" [disabled]=true [value]="network.apiKey" class="disabled_show"-->
       <!--[type]="hide ? 'password' : 'text'">-->
       <!--<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>-->
       <!--</mat-form-field>-->
     </div>
-    <div *ngIf="network != null">
+
+    <div *ngIf="network != null" class="action_button_container">
       <div *ngIf=" network.status== 4">
         <button mat-flat-button (click)="undeploy()" [disabled]="showProgress">undeploy</button>
       </div>
@@ -53,11 +71,7 @@
       </div>
     </div>
 
-    <div *ngIf="network != null" class="curl">
-      <div *ngIf=" network.status== 4">
-        {{curl}}
-      </div>
-    </div>
+
 
 
   </mat-tab>

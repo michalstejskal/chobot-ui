@@ -53,4 +53,11 @@ export class ModuleService {
         catchError(this.handleError('getNetwork', null))
       );
   }
+
+  undeploy(idNetwork: number, idModule: number){
+    return this.http.delete<ChobotModule>(API_ROOT_DOMAIN + 'user/' + AuthService.getLoggedUser().id + '/network/' + idNetwork + '/module/' + idModule)
+      .pipe(
+        catchError(this.handleError('getNetwork', null))
+      );
+  }
 }

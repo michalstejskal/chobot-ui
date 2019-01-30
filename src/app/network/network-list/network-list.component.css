@@ -9,6 +9,14 @@ table  {
   padding-bottom: 1em;
 }
 
+.network_list_table{
+  padding-top: 50px;
+}
+
+.network_list_item{
+  cursor: pointer;
+}
+
 .mat-flat-button{
   float: right;
 }
