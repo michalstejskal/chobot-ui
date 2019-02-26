@@ -6,6 +6,7 @@ import {NetworkType} from '../model/network-type';
 import {NetworkService} from '../network.service';
 import {t} from '@angular/core/src/render3';
 import {Router} from '@angular/router';
+import {NetworkParameter} from '../model/network-parameter';
 
 @Component({
   selector: 'app-network-detail-add',
@@ -18,6 +19,7 @@ export class NetworkDetailAddComponent implements OnInit {
   hidden: string;
   trainingData = '';
   files: File[];
+  networkParameter = '';
 
 
   constructor(public snackBar: MatSnackBar,
@@ -37,10 +39,18 @@ export class NetworkDetailAddComponent implements OnInit {
         this.network = network;
 
         if (this.files) {
-          this.networkService.postNetworkParameter(this.network, this.files[0]).subscribe();
-        } else if (this.trainingData.length) {
-          this.networkService.postNetworkParameterString(this.network, this.trainingData).subscribe();
+          this.networkService.postNetworkParameterData(this.network, this.files[0]).subscribe();
         }
+
+        if (this.network.type.name === 'log_classification' && this.networkParameter) {
+          const networkParam = new NetworkParameter();
+          networkParam.name = 'DATA_PATTERN';
+          networkParam.abbreviation = 'DATA_PATTERN';
+          networkParam.value = this.networkParameter;
+
+          this.networkService.postNetworkParameter(this.network, networkParam).subscribe();
+        }
+
         this.openSnackBar('Network ' + this.network.name + ' saved', '');
         this.router.navigateByUrl('/networks/' + this.network.id);
       }

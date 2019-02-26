@@ -1,3 +1,5 @@
 export class NetworkParameter {
-  private name: string;
+  public name: string;
+  public abbreviation: string;
+  public value: string;
 }

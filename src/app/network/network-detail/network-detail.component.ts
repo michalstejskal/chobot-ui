@@ -93,6 +93,9 @@ export class NetworkDetailComponent implements OnInit {
   checkHealtz() {
     this.networkService.getNetworkHealtz('http://' + this.network.connectionUri + 'healtz').subscribe(value => {
       this.healtz = 'running';
+      if (this.healtz !== 'running'){
+        this.network.status = 3;
+      }
     });
   }
 

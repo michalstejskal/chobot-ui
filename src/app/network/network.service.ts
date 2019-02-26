@@ -75,7 +75,7 @@ export class NetworkService {
   }
 
 
-  postNetworkParameter(network: Network, file: File) {
+  postNetworkParameterData(network: Network, file: File) {
     const uploadData = new FormData();
     uploadData.append('file', file, file.name);
     return this.http.post<Network>(API_ROOT_DOMAIN + 'user/' + AuthService.getLoggedUser().id + '/network/' + network.id + '/trainData', uploadData)
@@ -84,8 +84,8 @@ export class NetworkService {
       );
   }
 
-  postNetworkParameterString(network: Network, trainData: string) {
-    return this.http.post<Network>(API_ROOT_DOMAIN + 'user/' + AuthService.getLoggedUser().id + '/network/' + network.id + '/encodedTrainData', trainData)
+  postNetworkParameter(network: Network, parameter: NetworkParameter) {
+    return this.http.post<Network>(API_ROOT_DOMAIN + 'user/' + AuthService.getLoggedUser().id + '/network/' + network.id + '/parameter', parameter)
       .pipe(
         catchError(this.handleError('getNetwork', null))
       );
