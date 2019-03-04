@@ -11,9 +11,13 @@ import {ModuleListComponent} from './module/module-list/module-list.component';
 import {ModuleDetailComponent} from './module/module-detail/module-detail.component';
 import {ModuleDetailEditComponent} from './module/module-detail-edit/module-detail-edit.component';
 import {ModuleDetailAddComponent} from './module/module-detail-add/module-detail-add.component';
+import {LoginComponent} from './auth/login/login.component';
+import {AuthGuard} from './auth/auth.guard';
+import {RegisterComponent} from './auth/register/register.component';
 
 const routes: Routes = [
-  {path: '', component: NetworkListComponent},
+  {path: '', component: NetworkListComponent, canActivate: [AuthGuard]},
+
   {path: 'users/:id', component: UserDetailEditComponent},
   {path: 'users/:id/edit', component: UserDetailEditComponent},
   {path: 'users/:id/add', component: UserDetailAddComponent}, // TODO BUDE REGISTRACE
@@ -28,6 +32,9 @@ const routes: Routes = [
   {path: 'networks/:idNetwork/modules/show/:id', component: ModuleDetailComponent},
   {path: 'modules/:id/edit', component: ModuleDetailEditComponent},
   {path: 'networks/:id/modules/add', component: ModuleDetailAddComponent},
+
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
 ];
 
 export const routingModule: ModuleWithProviders = RouterModule.forRoot(routes);

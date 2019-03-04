@@ -1,6 +1,9 @@
 <div class="edit-container" *ngIf="network != null">
   <mat-form-field>
+    <!--<input matInput placeholder="name" [formControl]="nameFormControl" [(ngModel)]="network.name">-->
     <input matInput placeholder="name" [(ngModel)]="network.name">
+
+    <mat-hint *ngIf="invalidName">Name has to be unique in context of other networks and must not contains character _</mat-hint>
   </mat-form-field>
 
   <mat-form-field *ngIf="types != null">

@@ -1,28 +1,21 @@
-// import { HttpClient } from '@angular/common/http';
-// import { Observable } from 'rxjs';
-//
-// export class AbstractHttpService {
-//
-//     protected handleError(error: Response | any) {
-//         // In a real world app, we might use a remote logging infrastructure
-//
-//         let errMsg: string;
-//         if (error instanceof Response) {
-//             const body = error.json() || '';
-//             const err = body.error || JSON.stringify(body);
-//             errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-//         } else {
-//             errMsg = error.message ? error.message : error.toString();
-//         }
-//         console.error(errMsg);
-//         return Observable.throw(errMsg);
-//     }
-//
-//     protected extractData(res: Response) {
-//         if (res.status < 200 || res.status >= 300) {
-//             throw new Error('Bad response status: ' + res.status);
-//         }
-//
-//         return res.json();
-//     }
-// }
+import {HttpErrorResponse} from '@angular/common/http';
+import {throwError} from 'rxjs';
+
+export class AbstractHttpService {
+
+  protected handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Something bad happened; please try again later.');
+  }
+}

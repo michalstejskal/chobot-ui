@@ -90,12 +90,27 @@ table {
   overflow: scroll;
 }
 
-.action_button_container{
+.action_button_container {
   padding-top: 20px;
 }
 
 
-.advise{
+.advise {
   padding-top: 50px;
   width: 50%;
+}
+
+.reload_icon {
+  padding-left: 95%;
+}
+
+.swagger_link {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
+
+.swagger_iframe {
+  width: 100%;
+  min-height: 80vh ;max-height: 80vh;
 }

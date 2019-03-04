@@ -2,11 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Network} from '../model/Network';
 import {NetworkService} from '../network.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Log} from '../../shared/model/log';
 import {MatSnackBar} from '@angular/material';
-import {Observable} from 'rxjs';
-import {interval} from 'rxjs';
 import {ChobotModule} from '../../module/model/chobot-module';
+
 
 @Component({
   selector: 'app-network-detail',
@@ -23,7 +21,10 @@ export class NetworkDetailComponent implements OnInit {
   showProgress: boolean;
   curl: string;
   displayedColumns: string[] = ['name', 'type', 'status'];
-  options: any = {maxLines: 10, printMargin: false, showPrintMargin: false, showLineNumbers: false, showGutter: false, wrap: 100};
+  options: any = {maxLines: 10, printMargin: false, showPrintMargin: false, showLineNumbers: false, showGutter: false, wrap: 150};
+  swagger_url = '';
+  is_running = false;
+  data: any;
 
   constructor(public snackBar: MatSnackBar,
               private networkService: NetworkService,
@@ -46,10 +47,18 @@ export class NetworkDetailComponent implements OnInit {
         if (this.network.status === 4) {
           this.checkHealtz();
           this.curl = this.adviseCurl();
+          this.swagger_url = 'http://' + this.network.connectionUri + '?url=swagger2.json&docExpansion=full';
+          // this.swagger_url = 'http://' + this.network.connectionUri + '?url=swagger2.json&docExpansion=list';
+          // http://localhost/stejskys-e/?url=http://localhost/stejskys-e/swagger2.json
         }
         this.getModules();
       }
     );
+    this.getNetworkLogs();
+
+  }
+
+  getNetworkLogs() {
     this.networkService.getNetworkLogs(this.id).subscribe(logs => {
         // this.logs = atob(logs.value);
         if (logs.value.length !== 0) {
@@ -70,35 +79,50 @@ export class NetworkDetailComponent implements OnInit {
       this.network = network;
       this.checkHealtz();
       this.curl = '';
-      this.openSnackBar('Network undeploying', '');
+      this.openSnackBar('Undeploying network, please wait', '');
     });
   }
 
   adviseCurl() {
     if (this.network.type.name === 'chatbot') {
       return 'curl  -X POST -H "Authorization: ' + this.network.apiKey +
-        '" -H "Secret: $USER_SECRET"  --data \'{"message":"hello world"}\' \'' + this.network.connectionUri + 'network/predict\' -H "Content-Type: application/json"';
+        '" --data \'{"message":"hello world"}\' \'' + this.network.connectionUri + 'network/predict\' -H "Content-Type: application/json"';
     }
+
+    // http://localhost/stejskys-d/?url=http://localhost/stejskys-d/swagger2.json
 
     return 'curl  -X POST -H "Authorization: ' + this.network.apiKey +
       '" -H "Secret: $USER_SECRET" -F input=@FILE.jpg \'' + this.network.connectionUri + 'network/predict\'';
   }
 
   deploy() {
-    this.showProgress = true;
-    this.networkService.deployNetwork(this.id).subscribe();
-    this.openSnackBar('Deploying network', '');
+    // this.showProgress = true;
+    this.networkService.deployNetwork(this.id).subscribe(
+      response => {
+        this.getNetwork();
+      }
+    );
+    this.openSnackBar('Deploying network, please wait', '');
   }
 
   checkHealtz() {
     this.networkService.getNetworkHealtz('http://' + this.network.connectionUri + 'healtz').subscribe(value => {
       this.healtz = 'running';
-      if (this.healtz !== 'running'){
+      this.is_running = true;
+      if (this.healtz !== 'running') {
         this.network.status = 3;
       }
     });
   }
 
+  loadLogsAndStatus() {
+    this.checkHealtz();
+    this.getNetworkLogs();
+  }
+
+  loadLogs() {
+    this.getNetworkLogs();
+  }
 
   addModule() {
     this.router.navigateByUrl('/networks/' + this.id + '/modules/add');
@@ -110,7 +134,11 @@ export class NetworkDetailComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 2000,
+      duration: 4000,
     });
+  }
+
+  openSwagger() {
+    window.open(this.swagger_url, '_blank');
   }
 }

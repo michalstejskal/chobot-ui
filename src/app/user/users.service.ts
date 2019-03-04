@@ -23,8 +23,8 @@ export class UsersService {
       );
   }
 
-  getUser(id: number): Observable<User> {
-    return this.http.get<User>(this.usersUrl + id)
+  getUserMe(): Observable<User> {
+    return this.http.get<User>(this.usersUrl + 'me')
       .pipe(
         catchError(this.handleError('getUser', null))
       );

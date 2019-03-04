@@ -40,7 +40,6 @@ export class ModuleService {
   }
 
   deployModule(idModule: number, idNetwork: number) {
-    console.log(API_ROOT_DOMAIN + 'user/' + AuthService.getLoggedUser().id + '/network/' + idNetwork + '/module/' + idModule + '/deployment');
     return this.http.put<ChobotModule>(API_ROOT_DOMAIN + 'user/' + AuthService.getLoggedUser().id + '/network/' + idNetwork + '/module/' + idModule + '/deployment', null)
       .pipe(
         catchError(this.handleError('getNetwork', null))

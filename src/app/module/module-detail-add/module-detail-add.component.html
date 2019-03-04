@@ -3,6 +3,7 @@
     <div class="edit-container" *ngIf="module != null">
       <mat-form-field>
         <input matInput placeholder="name" [(ngModel)]="module.name">
+        <mat-hint *ngIf="invalidName">Name has to be unique in context of other modules and must not contains character _</mat-hint>
       </mat-form-field>
 
       <mat-form-field>

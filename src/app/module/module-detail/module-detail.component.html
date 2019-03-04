@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group animationDuration="2000ms" (selectedTabChange)="loadLogsAndStatus($event)">
   <mat-tab label="info">
     <div class="edit-container" *ngIf="module != null">
       <mat-form-field>
@@ -15,6 +15,11 @@
 
       <mat-form-field>
         <input matInput placeholder="status" [value]="module.status | statusPipe" disabled="true" class="disabled_show">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="healtz" [value]="healtz" readonly="true"
+               class="disabled_show">
       </mat-form-field>
 
       <mat-form-field>
@@ -63,6 +68,9 @@
     <div class="logs" style="min-height: 80vh ;max-height: 80vh;">
       <mat-form-field class="logs-disabled_show">
         <textarea autosize matInput [value]="logs" [disabled]="true" class="disabled-logs"></textarea>
+        <button mat-icon-button (click)="loadLogs()" class="reload_icon">
+          <mat-icon aria-label="reload logs">cached</mat-icon>
+        </button>
       </mat-form-field>
     </div>
   </mat-tab>

@@ -1,40 +1,37 @@
-<mat-tab-group>
+<mat-tab-group animationDuration="2000ms" (selectedTabChange)="loadLogsAndStatus($event)">
   <mat-tab label="information">
-
-    <!--<div *ngIf="showProgress" class="deploy-process">-->
-    <!--&lt;!&ndash;<mat-spinner></mat-spinner>&ndash;&gt;-->
-    <!--<mat-progress-bar mode="indeterminate"></mat-progress-bar>-->
-    <!--<p><strong>Starting network</strong></p>-->
-    <!--</div>-->
-
     <div class="edit-container" *ngIf="network != null">
       <mat-form-field>
-        <input matInput placeholder="name" [value]="network.name" [disabled]="true" class="disabled_show">
+        <input matInput placeholder="name" [value]="network.name" readonly="true" class="disabled_show">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="type" [value]="network.type.name | networkTypePipe" [disabled]="true"
-               class="disabled_show">
-      </mat-form-field>
-
-      <mat-form-field>
-        <input matInput placeholder="status" [value]="network.status | statusPipe" [disabled]="true"
+        <input matInput placeholder="type" [value]="network.type.name | networkTypePipe" readonly="true"
                class="disabled_show">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="healtz" [value]="healtz" [disabled]="true"
+        <input matInput placeholder="status" [value]="network.status | statusPipe" readonly="true"
                class="disabled_show">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="connection uri" [value]="network.connectionUri" [disabled]="true"
+        <input matInput placeholder="healtz" [value]="healtz" readonly="true"
                class="disabled_show">
       </mat-form-field>
 
-      <mat-form-field *ngIf="network.apiKey != null">
-        <input matInput placeholder="api key secret" [value]="network.apiKey" [disabled]="true"
+      <mat-form-field *ngIf=" network.status== 4">
+        <input matInput placeholder="connection uri" [value]="network.connectionUri" readonly="true"
                class="disabled_show">
+      </mat-form-field>
+
+      <mat-form-field *ngIf="network.apiKey != null && network.status== 4">
+        <input matInput placeholder="api key" [value]="network.apiKey" readonly="true"
+               class="disabled_show">
+      </mat-form-field>
+
+      <mat-form-field *ngIf=" network.status== 4 && is_running == true">
+        <input matInput placeholder="open swagger docs" readonly="true" class="swagger_link" (click)="openSwagger()">
       </mat-form-field>
 
       <div *ngIf="network != null" class="curl">
@@ -53,14 +50,6 @@
           </div>
         </div>
       </div>
-
-      <!--<mat-form-field>-->
-      <!--<input matInput placeholder="api key secret" [disabled]=true [value]="network.apiKey" class="disabled_show"-->
-      <!--[type]="hide ? 'password' : 'text'">-->
-      <!--<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>-->
-      <!--</mat-form-field>-->
-
-
     </div>
 
     <div *ngIf="network != null" class="action_button_container">
@@ -72,27 +61,27 @@
         <button mat-flat-button (click)="deploy()" [disabled]="showProgress">deploy</button>
       </div>
 
-
-      <!--<div class="advise">-->
-      <!--<p>-->
-        <!--Lorem ipsum (zkráceně lipsum) je označení pro standardní pseudolatinský text užívaný v grafickém designu a navrhování jako demonstrativní výplňový text při vytváření pracovních ukázek grafických návrhů (např. internetových stránek, rozvržení časopisů či všech druhů reklamních materiálů). Lipsum tak pracovně znázorňuje text v ukázkových maketách (tzv. mock-up) předtím, než bude do hotového návrhu vložen smysluplný obsah.-->
-
-        <!--Pokud by se pro stejný účel použil smysluplný text, bylo by těžké hodnotit pouze vzhled, aniž by se pozorovatel nechal svést ke čtení obsahu. Pokud by byl naopak použit nesmyslný, ale pravidelný text (např. opakování „asdf asdf asdf…“), oko by při posuzování vzhledu bylo vyrušováno pravidelnou strukturou textu, která se od běžného textu liší. Text lorem ipsum na první pohled připomíná běžný text, slova jsou různě dlouhá, frekvence písmen je podobná běžné řeči, interpunkce vypadá přirozeně atd.-->
-      <!--</p>-->
-      <!--</div>-->
     </div>
-
-
-
-
   </mat-tab>
+
+  <mat-tab label="swagger docs" *ngIf="network!=null && network.status== 4 && is_running == true">
+    <iframe [src]="swagger_url | safe" frameBorder="0" class="swagger_iframe"></iframe>
+  </mat-tab>
+
   <mat-tab label="logs">
     <div class="logs" style="min-height: 80vh ;max-height: 80vh;">
       <mat-form-field class="logs-disabled_show">
         <textarea autosize matInput [value]="logs" [disabled]="true" class="disabled-logs"></textarea>
+        <button mat-icon-button (click)="loadLogs()" class="reload_icon">
+          <mat-icon aria-label="reload logs">cached</mat-icon>
+        </button>
       </mat-form-field>
+
     </div>
+
+
   </mat-tab>
+
   <mat-tab label="modules">
     <div class="edit-container" *ngIf="network != null">
       <table mat-table [dataSource]="modules" class="mat-elevation-z8">
@@ -120,8 +109,6 @@
       </table>
     </div>
     <button mat-flat-button (click)="addModule()">+</button>
-
-
   </mat-tab>
 </mat-tab-group>
 

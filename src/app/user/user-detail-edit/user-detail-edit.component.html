@@ -3,10 +3,10 @@
     <input matInput placeholder="User login" [(ngModel)]="user.login" [disabled]=true>
   </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="password" [(ngModel)]="user.password" [type]="hide ? 'password' : 'text'">
-    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
-  </mat-form-field>
+  <!--<mat-form-field>-->
+    <!--<input matInput placeholder="password" [(ngModel)]="user.password" [type]="hide ? 'password' : 'text'">-->
+    <!--<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>-->
+  <!--</mat-form-field>-->
 
   <mat-form-field>
     <input matInput placeholder="first name" [(ngModel)]="user.firstName">
@@ -21,9 +21,9 @@
     <input matInput placeholder="email" [(ngModel)]="user.email">
   </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="api key secret" [disabled]="true" [(ngModel)]="user.secret">
-  </mat-form-field>
+  <!--<mat-form-field>-->
+    <!--<input matInput placeholder="api key secret" [disabled]="true" [(ngModel)]="user.secret">-->
+  <!--</mat-form-field>-->
 
   <!--<mat-form-field>-->
     <!--<input matInput placeholder="api key secret" [disabled]=true [(ngModel)]="user.secret"-->
@@ -32,5 +32,5 @@
   <!--</mat-form-field>-->
 </div>
 
-<button mat-flat-button (click)="saveAndValidate()">save</button>
-
+<button mat-flat-button class="save-button" (click)="saveAndValidate()">save</button>
+<button mat-flat-button class="logout-button" (click)="logout()">logout</button>

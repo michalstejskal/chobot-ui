@@ -9,17 +9,9 @@
   <aside class="navigation_container">
     <img src="assets/images/logo2.png" class="logo">
 
-    <div class="navigation">
+    <div class="navigation" *ngIf="isLogged()">
       <a routerLink="/networks" class="navigation_item">networks</a><br>
-      <!--<a routerLink="/networks"> <i class="fa fa-sitemap fa-2x" title="agregace" aria-hidden="true"-->
-                                    <!--style=" margin-left: 23px; margin-top: 15px; color: rgba(0,0,0,0.75)"></i></a><br>-->
-
-      <!--<a routerLink="/modules"> <i class="fa fa-plug fa-2x" title="agregace" aria-hidden="true"-->
-                                   <!--style=" margin-left: 23px; margin-top: 15px; color: rgba(0,0,0,0.75)"></i></a><br>-->
-
       <a routerLink="/users/1" class="navigation_item">profile</a>
-      <!--<a routerLink="/users/1"> <i class="fa fa-user fa-2x" title="agregace" aria-hidden="true"-->
-                                   <!--style=" margin-left: 27px; margin-top: 15px; color: rgba(0,0,0,0.75)"></i></a><br>-->
     </div>
 
   </aside>

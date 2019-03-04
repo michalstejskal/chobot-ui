@@ -20,6 +20,7 @@ export class NetworkDetailAddComponent implements OnInit {
   trainingData = '';
   files: File[];
   networkParameter = '';
+  invalidName = false;
 
 
   constructor(public snackBar: MatSnackBar,
@@ -34,27 +35,41 @@ export class NetworkDetailAddComponent implements OnInit {
   }
 
   saveAndValidate() {
-    this.networkService.postNetwork(this.network).subscribe(
-      network => {
-        this.network = network;
+    this.invalidName = false;
+    if (!this.network.name || this.network.name.includes('_')) {
+      this.invalidName = true;
+      this.openSnackBar('Invalid name for network ' + this.network.name, '');
+    }else if (!this.network.type) {
+      this.openSnackBar('Please selct type of network', '');
+    } else if (!this.files && this.network.type.name !== 'image_classification') {
+      this.openSnackBar('No train files provided', '');
+    } else {
 
-        if (this.files) {
-          this.networkService.postNetworkParameterData(this.network, this.files[0]).subscribe();
-        }
+      this.networkService.postNetwork(this.network).subscribe(
+        network => {
+          this.network = network;
 
-        if (this.network.type.name === 'log_classification' && this.networkParameter) {
-          const networkParam = new NetworkParameter();
-          networkParam.name = 'DATA_PATTERN';
-          networkParam.abbreviation = 'DATA_PATTERN';
-          networkParam.value = this.networkParameter;
+          if (this.files) {
+            this.networkService.postNetworkParameterData(this.network, this.files[0]).subscribe();
+          }
 
-          this.networkService.postNetworkParameter(this.network, networkParam).subscribe();
-        }
+          if (this.network.type.name === 'log_classification' && this.networkParameter) {
+            const networkParam = new NetworkParameter();
+            networkParam.name = 'DATA_PATTERN';
+            networkParam.abbreviation = 'DATA_PATTERN';
+            networkParam.value = this.networkParameter;
 
-        this.openSnackBar('Network ' + this.network.name + ' saved', '');
-        this.router.navigateByUrl('/networks/' + this.network.id);
-      }
-    );
+            this.networkService.postNetworkParameter(this.network, networkParam).subscribe();
+          }
+
+          this.openSnackBar('Network ' + this.network.name + ' saved', '');
+          this.router.navigateByUrl('/networks/' + this.network.id);
+        },
+        error => {
+          this.openSnackBar('Error occurred while saving network ' + this.network.name, '');
+        },
+      );
+    }
   }
 
 
@@ -64,7 +79,7 @@ export class NetworkDetailAddComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 2000,
+      duration: 4000,
     });
   }
 

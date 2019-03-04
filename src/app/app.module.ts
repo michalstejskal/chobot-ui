@@ -15,7 +15,8 @@ import {UserDetailAddComponent} from './user/user-detail-add/user-detail-add.com
 import {NetworkDetailAddComponent} from './network/network-detail-add/network-detail-add.component';
 import {ModuleDetailAddComponent} from './module/module-detail-add/module-detail-add.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {FormsModule, ReactiveFormsModule, FormGroup} from '@angular/forms';
+import {ReactiveFormsModule, FormGroup, FormsModule} from '@angular/forms';
+import { ChartModule } from 'primeng/primeng';
 
 import {
   MatAutocompleteModule,
@@ -54,11 +55,10 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {UsersService} from './user/users.service';
 import {HttpErrorHandler} from './http-error-handler.service';
 import {MessageService} from './message.service';
-import {AuthService} from './auth/auth.service';
 import {NetworkService} from './network/network.service';
 import {StatusPipe} from './shared/pipes/status-pipe';
 import {NetworkTypePipe} from './shared/pipes/network-type-pipe';
@@ -66,6 +66,12 @@ import {AutosizeModule} from 'ngx-autosize';
 import {AceEditorModule} from 'ng2-ace-editor';
 import {ModuleService} from './module/module.service';
 import {ModuleTypePipe} from './shared/pipes/module-type-pipe';
+import {SafePipe} from './shared/pipes/safe-pipe';
+import {LoginComponent} from './auth/login/login.component';
+import {AuthService} from './auth/auth.service';
+import {JwtInterceptor} from './auth/jwt.interceptor';
+import {ErrorInterceptor} from './auth/error.interceptor';
+import {RegisterComponent} from './auth/register/register.component';
 
 
 @NgModule({
@@ -82,9 +88,12 @@ import {ModuleTypePipe} from './shared/pipes/module-type-pipe';
     UserDetailAddComponent,
     NetworkDetailAddComponent,
     ModuleDetailAddComponent,
+    LoginComponent,
+    RegisterComponent,
     StatusPipe,
     NetworkTypePipe,
-    ModuleTypePipe
+    ModuleTypePipe,
+    SafePipe
   ],
   imports: [
     BrowserModule,
@@ -130,6 +139,7 @@ import {ModuleTypePipe} from './shared/pipes/module-type-pipe';
     AutosizeModule,
     AceEditorModule,
     routingModule,
+    ChartModule
   ],
   providers: [
     UsersService,
@@ -137,7 +147,9 @@ import {ModuleTypePipe} from './shared/pipes/module-type-pipe';
     ModuleService,
     HttpErrorHandler,
     MessageService,
-    AuthService
+    AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

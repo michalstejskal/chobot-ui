@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {User} from '../model/user';
 import {UsersService} from '../users.service';
 import {MatSnackBar} from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-detail-edit',
@@ -12,7 +13,7 @@ export class UserDetailEditComponent implements OnInit {
   hide = true;
   user: User;
 
-  constructor(public snackBar: MatSnackBar, private userService: UsersService) {
+  constructor(public snackBar: MatSnackBar, private userService: UsersService, private router: Router) {
   }
 
   ngOnInit() {
@@ -20,12 +21,20 @@ export class UserDetailEditComponent implements OnInit {
   }
 
   getUser(): void {
-    this.userService.getUser(1).subscribe(user => this.user = user);
+    this.userService.getUserMe().subscribe(user => {
+      this.user = user;
+    });
   }
 
   saveAndValidate() {
     this.userService.putUser(this.user).subscribe();
     this.openSnackBar('User saved', '');
+  }
+
+
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 
   openSnackBar(message: string, action: string) {

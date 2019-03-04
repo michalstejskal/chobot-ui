@@ -3,6 +3,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {ModuleService} from '../module.service';
 import {ChobotModule} from '../model/chobot-module';
 import {MatSnackBar} from '@angular/material';
+import {NetworkService} from '../../network/network.service';
 
 @Component({
   selector: 'app-module-detail',
@@ -16,10 +17,13 @@ export class ModuleDetailComponent implements OnInit {
   showProgress: boolean;
   options: any = {maxLines: 1000, printMargin: false};
   logs: string;
+  healtz = 'not running';
+  is_running = false;
 
   constructor(public snackBar: MatSnackBar,
               private moduleService: ModuleService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private networkService: NetworkService) {
   }
 
   ngOnInit() {
@@ -38,29 +42,52 @@ export class ModuleDetailComponent implements OnInit {
           this.module.code = atob(this.module.code);
         }
 
-        this.moduleService.getModuleLogs(this.idModule, this.idNetwork).subscribe(logs => {
-            if (logs.value.length !== 0) {
-              this.logs = atob(logs.value);
-            } else {
-              this.logs = 'Network did not logged yet...';
+        if (this.module.status === 4) {
+          this.checkHealtz();
+          this.moduleService.getModuleLogs(this.idModule, this.idNetwork).subscribe(logs => {
+              if (logs.value.length !== 0) {
+                this.logs = atob(logs.value);
+              } else {
+                this.logs = 'Network did not logged yet...';
+              }
             }
-          }
-        );
+          );
+        }
+      }
+    );
+  }
 
+  loadLogsAndStatus() {
+    this.checkHealtz();
+    this.getModuleLogs();
+  }
+
+  loadLogs() {
+    this.getModuleLogs();
+  }
+
+  getModuleLogs() {
+    this.moduleService.getModuleLogs(this.idModule, this.idNetwork).subscribe(logs => {
+        if (logs.value.length !== 0) {
+          this.logs = atob(logs.value);
+        } else {
+          this.logs = 'Network did not logged yet...';
+        }
       }
     );
   }
 
   deploy() {
     this.showProgress = true;
-    console.log(this.module);
-    this.moduleService.deployModule(this.module.id, this.idNetwork).subscribe();
-    this.openSnackBar('Deploying module', '');
+    this.moduleService.deployModule(this.module.id, this.idNetwork).subscribe(module => {
+      this.getModule();
+      this.openSnackBar('Deploying module', '');
+    });
   }
 
   undeploy() {
     this.moduleService.undeploy(this.idNetwork, this.module.id).subscribe(module => {
-      this.module = module;
+      this.getModule();
       this.openSnackBar('Module undeploying', '');
     });
 
@@ -70,9 +97,19 @@ export class ModuleDetailComponent implements OnInit {
     console.log('new code', code);
   }
 
+  checkHealtz() {
+    this.networkService.getNetworkHealtz('http://' + this.module.connectionUri + 'healtz').subscribe(value => {
+      this.healtz = 'running';
+      this.is_running = true;
+      if (this.healtz !== 'running') {
+        this.module.status = 3;
+      }
+    });
+  }
+
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 2000,
+      duration: 4000,
     });
   }
 

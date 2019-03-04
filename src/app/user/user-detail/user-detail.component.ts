@@ -18,7 +18,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   getUser(): void {
-    this.userService.getUser(1).subscribe(user => this.user = user);
+    this.userService.getUserMe().subscribe(user => this.user = user);
   }
 
 }
