@@ -3,8 +3,14 @@
   flex-direction: column;
 }
 
+.log-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .edit-container > * {
   width: 100%;
+  height: 100%;
 }
 
 .mat-flat-button {
@@ -13,6 +19,10 @@
 
 .disabled_show {
   color: black;
+}
+
+.example-full-width {
+  width: 100%;
 }
 
 .logs {
@@ -31,10 +41,77 @@
   font-family: "Roboto Mono Regular", monospace;;
 }
 
+mat-spinner {
+  width: 50%;
+}
+
+.deploy-process {
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+
+p {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 .disabled-logs {
   color: white;
   font-family: "Roboto Mono Regular", monospace;;
 }
+
+table {
+  width: 100%;
+}
+
+table {
+  transition: none !important;
+  box-shadow: none !important;
+  padding-bottom: 1em;
+}
+
+.mat-flat-button {
+  float: right;
+}
+
+.curl {
+  font-size: 80%;
+  padding-top: 2%;
+}
+
+.curl-container {
+  /*padding-top: 20px;*/
+  width: 100%;
+}
+
+.curl_editor {
+  min-height: 10vh;
+  max-height: 2vh;
+  width: 100%;
+  overflow: scroll;
+  margin-bottom: 10px;
+}
+
+.action_button_container {
+  padding-top: 20px;
+}
+
+
+.advise {
+  padding-top: 50px;
+  width: 50%;
+}
+
 .reload_icon {
   padding-left: 95%;
+}
+
+.swagger_link {
+  cursor: pointer;
+  /*color: blue;*/
+  /*text-decoration: underline;*/
+}
+
+.swagger_iframe {
+  width: 100%;
+  min-height: 80vh ;max-height: 80vh;
 }

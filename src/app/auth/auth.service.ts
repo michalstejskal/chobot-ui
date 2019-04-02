@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {User} from '../user/model/user';
 import {LOGIN_ROOT_DOMAIN} from '../shared/api-util';
 import {catchError, tap} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AbstractHttpService} from '../shared/service/abstract-http.service';
 import {Router} from '@angular/router';
+import {UserLogin} from './model/UserLogin';
 
 @Injectable({providedIn: 'root'})
 
@@ -23,8 +24,12 @@ export class AuthService extends AbstractHttpService {
     return user;
   }
 
-  login(username: string, password: string) {
-    return this.http.post<any>(LOGIN_ROOT_DOMAIN, {username, password}, {observe: 'response'})
+  login(userLogin: UserLogin) {
+
+    return this.http. post<any>(LOGIN_ROOT_DOMAIN, userLogin, {
+      observe: 'response',
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    })
       .pipe(
         catchError(this.handleError)
       );

@@ -31,9 +31,35 @@
     </div>
   </div>
 
+
+
 </div>
 
 <button mat-flat-button (click)="saveAndValidate()">save</button>
+
+
+<table *ngIf="types!=null" mat-table [dataSource]="types" class="mat-elevation-z8 network_list_table">
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>type</th>
+    <td class="network_list_item" mat-cell *matCellDef="let element">{{element.name}}</td>
+  </ng-container>
+
+  <!-- type Column -->
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef>description</th>
+    <td class="network_list_item" mat-cell *matCellDef="let element">{{element.description}}</td>
+  </ng-container>
+
+  <!-- status Column -->
+  <ng-container matColumnDef="classes">
+    <th mat-header-cell *matHeaderCellDef>classes</th>
+    <td class="network_list_item" mat-cell *matCellDef="let element">{{element.classes}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
 
 
 

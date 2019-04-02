@@ -1,11 +1,11 @@
 <div class="edit-container">
 
   <mat-form-field>
-    <input matInput placeholder="login" [(ngModel)]="login">
+    <input matInput placeholder="login" [(ngModel)]="userLogin.username">
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="passsword" [(ngModel)]="password" type="password">
+    <input matInput placeholder="passsword" [(ngModel)]="userLogin.password" type="password">
   </mat-form-field>
   <button mat-flat-button (click)="onSubmit()">login</button>
   <button mat-button (click)="register()">create new account</button>

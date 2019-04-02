@@ -19,7 +19,6 @@ export class ModuleDetailAddComponent implements OnInit {
   moduleTypes: ModuleType[] = [
     {id: 0, value: 'lambda'},
     {id: 1, value: 'git repository'},
-    {id: 2, value: 'docker image'}
   ];
 
   constructor(public snackBar: MatSnackBar,
@@ -30,7 +29,7 @@ export class ModuleDetailAddComponent implements OnInit {
 
   ngOnInit() {
     this.module = new ChobotModule();
-    this.module.code = 'def handle(context):';
+    this.module.code = 'def handle(context_data, original_request):';
     this.module.actualVersion = new ActualVersion();
     this.route.params.subscribe((params: Params) => {
       this.idNetwork = +params['id'];

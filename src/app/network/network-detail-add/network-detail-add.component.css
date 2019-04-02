@@ -10,3 +10,15 @@
 .mat-flat-button{
   float: right;
 }
+
+table {
+  width: 100%;
+}
+
+
+table  {
+  transition: none !important;
+  box-shadow: none !important;
+  padding-bottom: 1em;
+  padding-top: 10em;
+}

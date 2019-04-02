@@ -4,6 +4,7 @@ import {ModuleService} from '../module.service';
 import {ChobotModule} from '../model/chobot-module';
 import {MatSnackBar} from '@angular/material';
 import {NetworkService} from '../../network/network.service';
+import {ClipboardService} from 'ngx-clipboard';
 
 @Component({
   selector: 'app-module-detail',
@@ -19,11 +20,13 @@ export class ModuleDetailComponent implements OnInit {
   logs: string;
   healtz = 'not running';
   is_running = false;
+  swagger_url = '';
 
   constructor(public snackBar: MatSnackBar,
               private moduleService: ModuleService,
               private route: ActivatedRoute,
-              private networkService: NetworkService) {
+              private networkService: NetworkService,
+              private clipboardService: ClipboardService) {
   }
 
   ngOnInit() {
@@ -44,6 +47,7 @@ export class ModuleDetailComponent implements OnInit {
 
         if (this.module.status === 4) {
           this.checkHealtz();
+          this.swagger_url = 'http://' + this.module.connectionUri + '?url=swagger2.json&docExpansion=full';
           this.moduleService.getModuleLogs(this.idModule, this.idNetwork).subscribe(logs => {
               if (logs.value.length !== 0) {
                 this.logs = atob(logs.value);
@@ -111,6 +115,16 @@ export class ModuleDetailComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 4000,
     });
+  }
+
+  openSwagger() {
+    window.open(this.swagger_url, '_blank');
+  }
+
+
+  copyToken() {
+    this.clipboardService.copyFromContent(this.module.apiKey);
+    this.openSnackBar('Api key copied to clipboard', '');
   }
 
 }

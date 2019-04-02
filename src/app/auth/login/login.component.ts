@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../auth.service';
 import {UsersService} from '../../user/users.service';
 import {MatSnackBar} from '@angular/material';
+import {UserLogin} from '../model/UserLogin';
 
 
 @Component({
@@ -12,8 +13,7 @@ import {MatSnackBar} from '@angular/material';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  login = '';
-  password = '';
+  userLogin: UserLogin = new UserLogin();
 
   loginForm: FormGroup;
   loading = false;
@@ -53,13 +53,13 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
 
     // stop here if form is invalid
-    if (!this.login || !this.password) {
+    if (!this.userLogin.username || !this.userLogin.password) {
       this.openSnackBar('You have to fill loagin and password fields', '');
       return;
     }
 
     this.loading = true;
-    this.authenticationService.login(this.login, this.password)
+    this.authenticationService.login(this.userLogin)
       .subscribe((response: any) => {
         localStorage.setItem('token', response.headers.get('Authorization'));
 

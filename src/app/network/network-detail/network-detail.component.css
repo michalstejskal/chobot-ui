@@ -106,8 +106,8 @@ table {
 
 .swagger_link {
   cursor: pointer;
-  color: blue;
-  text-decoration: underline;
+  /*color: blue;*/
+  /*text-decoration: underline;*/
 }
 
 .swagger_iframe {

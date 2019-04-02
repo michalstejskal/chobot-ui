@@ -17,6 +17,7 @@ import {ModuleDetailAddComponent} from './module/module-detail-add/module-detail
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule, FormGroup, FormsModule} from '@angular/forms';
 import { ChartModule } from 'primeng/primeng';
+import { ClipboardModule } from 'ngx-clipboard';
 
 import {
   MatAutocompleteModule,
@@ -72,6 +73,7 @@ import {AuthService} from './auth/auth.service';
 import {JwtInterceptor} from './auth/jwt.interceptor';
 import {ErrorInterceptor} from './auth/error.interceptor';
 import {RegisterComponent} from './auth/register/register.component';
+import {PasswordPipe} from './shared/pipes/password-pipe';
 
 
 @NgModule({
@@ -93,7 +95,8 @@ import {RegisterComponent} from './auth/register/register.component';
     StatusPipe,
     NetworkTypePipe,
     ModuleTypePipe,
-    SafePipe
+    SafePipe,
+    PasswordPipe
   ],
   imports: [
     BrowserModule,
@@ -139,7 +142,8 @@ import {RegisterComponent} from './auth/register/register.component';
     AutosizeModule,
     AceEditorModule,
     routingModule,
-    ChartModule
+    ChartModule,
+    ClipboardModule
   ],
   providers: [
     UsersService,

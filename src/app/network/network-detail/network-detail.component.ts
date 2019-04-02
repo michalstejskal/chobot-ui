@@ -4,6 +4,7 @@ import {NetworkService} from '../network.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material';
 import {ChobotModule} from '../../module/model/chobot-module';
+import {ClipboardService} from 'ngx-clipboard';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class NetworkDetailComponent implements OnInit {
   modules: ChobotModule[];
   logs: string;
   id: number;
-  healtz = 'not running';
+  healtz = 'not running, please wait ... ';
   showProgress: boolean;
   curl: string;
   displayedColumns: string[] = ['name', 'type', 'status'];
@@ -29,7 +30,8 @@ export class NetworkDetailComponent implements OnInit {
   constructor(public snackBar: MatSnackBar,
               private networkService: NetworkService,
               private route: ActivatedRoute,
-              private router: Router
+              private router: Router,
+              private clipboardService: ClipboardService
   ) {
   }
 
@@ -48,8 +50,6 @@ export class NetworkDetailComponent implements OnInit {
           this.checkHealtz();
           this.curl = this.adviseCurl();
           this.swagger_url = 'http://' + this.network.connectionUri + '?url=swagger2.json&docExpansion=full';
-          // this.swagger_url = 'http://' + this.network.connectionUri + '?url=swagger2.json&docExpansion=list';
-          // http://localhost/stejskys-e/?url=http://localhost/stejskys-e/swagger2.json
         }
         this.getModules();
       }
@@ -140,5 +140,11 @@ export class NetworkDetailComponent implements OnInit {
 
   openSwagger() {
     window.open(this.swagger_url, '_blank');
+  }
+
+
+  copyToken() {
+    this.clipboardService.copyFromContent(this.network.apiKey);
+    this.openSnackBar('Api key copied to clipboard', '');
   }
 }

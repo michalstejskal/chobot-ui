@@ -11,6 +11,7 @@ import {Log} from '../shared/model/log';
 import {EMPTY} from 'rxjs';
 import {ChobotModule} from '../module/model/chobot-module';
 import {AbstractHttpService} from '../shared/service/abstract-http.service';
+import {NetworkType} from './model/network-type';
 
 
 @Injectable()
@@ -91,7 +92,7 @@ export class NetworkService extends AbstractHttpService {
   }
 
   getTypes() {
-    return this.http.get<Network[]>(API_ROOT_DOMAIN + 'networktype/')
+    return this.http.get<NetworkType[]>(API_ROOT_DOMAIN + 'networktype/')
       .pipe(
         catchError(this.handleError)
       );

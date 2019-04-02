@@ -18,6 +18,9 @@
       <mat-form-field>
         <input matInput placeholder="healtz" [value]="healtz" readonly="true"
                class="disabled_show">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="checkHealtz()">
+          <mat-icon>refresh</mat-icon>
+        </button>
       </mat-form-field>
 
       <mat-form-field *ngIf=" network.status== 4">
@@ -26,12 +29,19 @@
       </mat-form-field>
 
       <mat-form-field *ngIf="network.apiKey != null && network.status== 4">
-        <input matInput placeholder="api key" [value]="network.apiKey" readonly="true"
-               class="disabled_show">
+        <input matInput placeholder="api key" [value]="network.apiKey | passwordPipe" readonly="true"
+               class="disabled_show" type="password">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="copyToken()">
+          <mat-icon>input</mat-icon>
+        </button>
       </mat-form-field>
 
       <mat-form-field *ngIf=" network.status== 4 && is_running == true">
-        <input matInput placeholder="open swagger docs" readonly="true" class="swagger_link" (click)="openSwagger()">
+        <input matInput placeholder="docs" value="open swagger docs externally" readonly="true" class="swagger_link" (click)="openSwagger()">
+
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="openSwagger()">
+          <mat-icon>launch</mat-icon>
+        </button>
       </mat-form-field>
 
       <div *ngIf="network != null" class="curl">

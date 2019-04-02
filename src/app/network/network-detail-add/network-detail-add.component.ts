@@ -21,6 +21,7 @@ export class NetworkDetailAddComponent implements OnInit {
   files: File[];
   networkParameter = '';
   invalidName = false;
+  displayedColumns: string[] = ['name', 'description', 'classes'];
 
 
   constructor(public snackBar: MatSnackBar,

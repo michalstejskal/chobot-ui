@@ -6,7 +6,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="response class" [value]="module.responseClass">
+        <input matInput placeholder="response class" [value]="module.responseClass" readonly="true">
       </mat-form-field>
 
       <mat-form-field>
@@ -26,10 +26,6 @@
         <input matInput placeholder="type" [value]="module.type | moduleTypePipe" disabled="true" class="disabled_show">
       </mat-form-field>
 
-      <mat-form-field>
-        <input matInput placeholder="connection" [value]="module.connectionUri" disabled="true" class="disabled_show">
-      </mat-form-field>
-
       <mat-form-field *ngIf="module.type == 1">
         <input matInput placeholder="git repository" [(ngModel)]="module.repositoryUrl">
       </mat-form-field>
@@ -37,6 +33,28 @@
       <mat-form-field *ngIf="module.type == 2">
         <input matInput placeholder="docker image" [(ngModel)]="module.imageId">
       </mat-form-field>
+
+      <mat-form-field *ngIf=" module.status== 4">
+        <input matInput placeholder="connection uri" [value]="module.connectionUri" readonly="true"
+               class="disabled_show">
+      </mat-form-field>
+
+      <mat-form-field *ngIf="module.apiKey != null && module.status== 4">
+        <input matInput placeholder="api key" [value]="module.apiKey | passwordPipe" readonly="true"
+               class="disabled_show" type="password">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="copyToken()">
+          <mat-icon>input</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field *ngIf=" module.status== 4 && is_running == true">
+        <input matInput placeholder="docs" value="open swagger docs externally" readonly="true" class="swagger_link" (click)="openSwagger()">
+
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="openSwagger()">
+          <mat-icon>launch</mat-icon>
+        </button>
+      </mat-form-field>
+
     </div>
     <div *ngIf="module != null">
       <div *ngIf=" module.status== 4">
@@ -63,6 +81,9 @@
       </div>
 
     </div>
+  </mat-tab>
+  <mat-tab label="swagger docs" *ngIf="module!=null && module.status== 4 && is_running == true">
+    <iframe [src]="swagger_url | safe" frameBorder="0" class="swagger_iframe"></iframe>
   </mat-tab>
   <mat-tab label="logs">
     <div class="logs" style="min-height: 80vh ;max-height: 80vh;">
