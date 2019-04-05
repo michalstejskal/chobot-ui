@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Network} from '../model/Network';
+import {NetworkAdvice} from '../model/network-advice';
 import {MatSnackBar} from '@angular/material';
 import {NetworkType} from '../model/network-type';
 import {NetworkService} from '../network.service';
@@ -22,6 +23,7 @@ export class NetworkDetailAddComponent implements OnInit {
   networkParameter = '';
   invalidName = false;
   displayedColumns: string[] = ['name', 'description', 'classes'];
+  networkAdvice = new NetworkAdvice();
 
 
   constructor(public snackBar: MatSnackBar,
@@ -31,6 +33,7 @@ export class NetworkDetailAddComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.networkAdvice = new NetworkAdvice();
     this.network = new Network();
     this.networkService.getTypes().subscribe(types => this.types = types);
   }

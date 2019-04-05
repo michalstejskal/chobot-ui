@@ -1,65 +1,135 @@
-<div class="edit-container" *ngIf="network != null">
-  <mat-form-field>
-    <!--<input matInput placeholder="name" [formControl]="nameFormControl" [(ngModel)]="network.name">-->
-    <input matInput placeholder="name" [(ngModel)]="network.name">
+<mat-tab-group animationDuration="2000ms">
+  <mat-tab label="create network">
+    <div class="edit-container" *ngIf="network != null">
+      <mat-form-field>
+        <!--<input matInput placeholder="name" [formControl]="nameFormControl" [(ngModel)]="network.name">-->
+        <input matInput placeholder="name" [(ngModel)]="network.name">
 
-    <mat-hint *ngIf="invalidName">Name has to be unique in context of other networks and must not contains character _</mat-hint>
-  </mat-form-field>
-
-  <mat-form-field *ngIf="types != null">
-    <mat-select placeholder="type of network" [(ngModel)]="network.type">
-      <mat-option *ngFor="let type of types" [value]="type" ngDefaultControl>
-        {{type.name | networkTypePipe}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <div *ngIf="network.type != null">
-    <div class="edit-container" *ngIf="network.type != null">
-      <mat-form-field
-        *ngIf="network.type.name != 'image_classification'">
-        <input matInput placeholder="training data file" [(ngModel)]="hidden" [disabled]=true>
-        <button mat-flat-button (click)="inputFile.click()" [disabled]="trainingData.length != 0">Import file</button>
-        {{ inputFile.value }}
+        <mat-hint *ngIf="invalidName">Name has to be unique in context of other networks and must not contains character
+          _
+        </mat-hint>
       </mat-form-field>
-      <input #inputFile type="file" (change)="onChange($event)" [style.display]="'none'">
 
-      <mat-form-field *ngIf="network.type.name == 'log_classification'">
-        <input matInput placeholder="log parse pattern" [(ngModel)]="networkParameter">
+      <mat-form-field *ngIf="types != null">
+        <mat-select placeholder="type of network" [(ngModel)]="network.type">
+          <mat-option *ngFor="let type of types" [value]="type" ngDefaultControl>
+            {{type.name | networkTypePipe}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
+
+      <div *ngIf="network.type != null">
+        <div class="edit-container" *ngIf="network.type != null">
+          <mat-form-field
+            *ngIf="network.type.name != 'image_classification'">
+            <input matInput placeholder="training data file" [(ngModel)]="hidden" [disabled]=true>
+            <button mat-flat-button (click)="inputFile.click()" [disabled]="trainingData.length != 0">Import file
+            </button>
+            {{ inputFile.value }}
+          </mat-form-field>
+          <input #inputFile type="file" (change)="onChange($event)" [style.display]="'none'">
+
+          <mat-form-field *ngIf="network.type.name == 'log_classification'">
+            <input matInput placeholder="log parse pattern" [(ngModel)]="networkParameter">
+          </mat-form-field>
+
+        </div>
+      </div>
+
 
     </div>
-  </div>
+
+    <button mat-flat-button (click)="saveAndValidate()">save</button>
 
 
+    <table *ngIf="types!=null" mat-table [dataSource]="types" class="mat-elevation-z8 network_list_table">
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>type</th>
+        <td class="network_list_item" mat-cell *matCellDef="let element">{{element.name}}</td>
+      </ng-container>
 
-</div>
+      <!-- type Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>description</th>
+        <td class="network_list_item" mat-cell *matCellDef="let element">{{element.description}}</td>
+      </ng-container>
 
-<button mat-flat-button (click)="saveAndValidate()">save</button>
+      <!-- status Column -->
+      <ng-container matColumnDef="classes">
+        <th mat-header-cell *matHeaderCellDef>classes</th>
+        <td class="network_list_item" mat-cell *matCellDef="let element">{{element.classes}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-tab>
+  <mat-tab label="train data informations" *ngIf="networkAdvice != null">
+
+    <div class="network_data_advice" *ngIf="network.type == null">
+      Please select type of network first
+    </div>
 
 
-<table *ngIf="types!=null" mat-table [dataSource]="types" class="mat-elevation-z8 network_list_table">
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>type</th>
-    <td class="network_list_item" mat-cell *matCellDef="let element">{{element.name}}</td>
-  </ng-container>
+    <div class="network_data_advice" *ngIf="network.type != null && network.type.name == 'chatbot'">
 
-  <!-- type Column -->
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef>description</th>
-    <td class="network_list_item" mat-cell *matCellDef="let element">{{element.description}}</td>
-  </ng-container>
+      <!--<mat-form-field>-->
+        <!--<input matInput placeholder="network type" value="chatbot" readonly="true" class="disabled_show">-->
+      <!--</mat-form-field>-->
 
-  <!-- status Column -->
-  <ng-container matColumnDef="classes">
-    <th mat-header-cell *matHeaderCellDef>classes</th>
-    <td class="network_list_item" mat-cell *matCellDef="let element">{{element.classes}}</td>
-  </ng-container>
+      <div class="logs" style="min-height: 80vh ;max-height: 80vh;">
+        <mat-form-field class="logs-disabled_show">
+          <textarea autosize matInput [value]="networkAdvice.chatbotIntents" [disabled]="true" class="disabled-logs"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <div class="network_data_advice" *ngIf="network.type != null && network.type.name == 'log_classification'">
+      <!--<mat-form-field>-->
+        <!--<input matInput placeholder="network type" value="logs" readonly="true" class="disabled_show">-->
+      <!--</mat-form-field>-->
+
+      <div class="logs" style="min-height: 80vh ;max-height: 80vh;">
+        <mat-form-field class="logs-disabled_show">
+          <textarea autosize matInput [value]="networkAdvice.logsData" [disabled]="true" class="disabled-logs"></textarea>
+        </mat-form-field>
+        <div style="padding-bottom: 10px"></div>
+        <mat-form-field class="logs-disabled_show" style="padding-top: 10pt">
+          <textarea autosize matInput [value]="networkAdvice.logsPatter" [disabled]="true" class="disabled-logs"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="network_data_advice" *ngIf="network.type != null && network.type.name == 'image custom classification'">
+
+      <!--<mat-form-field>-->
+        <!--<input matInput placeholder="network type" value="imagess" readonly="true" class="disabled_show">-->
+      <!--</mat-form-field>-->
+
+      <div class="logs" style="min-height: 80vh ;max-height: 80vh;">
+        <mat-form-field class="logs-disabled_show">
+          <textarea autosize matInput [value]="networkAdvice.imagesStructure" [disabled]="true" class="disabled-logs"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="network_data_advice" *ngIf="network.type != null && network.type.name == 'image classification'">
+
+      <!--<mat-form-field>-->
+      <!--<input matInput placeholder="network type" value="chatbot" readonly="true" class="disabled_show">-->
+      <!--</mat-form-field>-->
+
+      <div class="logs" style="min-height: 80vh ;max-height: 80vh;">
+        <mat-form-field class="logs-disabled_show">
+          <textarea autosize matInput value="no train data needed" [disabled]="true" class="disabled-logs"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+  </mat-tab>
+
 
 
 

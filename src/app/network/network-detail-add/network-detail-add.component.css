@@ -22,3 +22,22 @@ table  {
   padding-bottom: 1em;
   padding-top: 10em;
 }
+
+.logs-disabled_show {
+  padding-left: 1%;
+  border-radius: 5px;
+  width: 99%;
+  /*background: #333;*/
+  background: #272822;
+  color: #F8F8F2;
+  font-family: "Roboto Mono Regular", monospace;;
+}
+
+.disabled-logs {
+  color: white;
+  font-family: "Roboto Mono Regular", monospace;;
+}
+
+.network_data_advice{
+  padding-top: 30pt;
+}
