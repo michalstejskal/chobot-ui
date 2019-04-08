@@ -18,7 +18,7 @@ export class ModuleDetailComponent implements OnInit {
   showProgress: boolean;
   options: any = {maxLines: 1000, printMargin: false};
   logs: string;
-  healtz = 'not running';
+  healtz = 'not running, please wait or deploy... ';
   is_running = false;
   swagger_url = '';
 
@@ -52,7 +52,7 @@ export class ModuleDetailComponent implements OnInit {
               if (logs.value.length !== 0) {
                 this.logs = atob(logs.value);
               } else {
-                this.logs = 'Network did not logged yet...';
+                this.logs = 'The selected network has not logged any messages yet ...';
               }
             }
           );
@@ -75,7 +75,7 @@ export class ModuleDetailComponent implements OnInit {
         if (logs.value.length !== 0) {
           this.logs = atob(logs.value);
         } else {
-          this.logs = 'Network did not logged yet...';
+          this.logs = 'The selected network has not logged any messages yet ...';
         }
       }
     );

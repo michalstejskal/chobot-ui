@@ -18,7 +18,7 @@ export class NetworkDetailComponent implements OnInit {
   modules: ChobotModule[];
   logs: string;
   id: number;
-  healtz = 'not running, please wait ... ';
+  healtz = 'not running, please wait or deploy... ';
   showProgress: boolean;
   curl: string;
   displayedColumns: string[] = ['name', 'type', 'status'];
@@ -64,7 +64,7 @@ export class NetworkDetailComponent implements OnInit {
         if (logs.value.length !== 0) {
           this.logs = atob(logs.value);
         } else {
-          this.logs = 'Network did not logged yet...';
+          this.logs = 'The selected network has not logged any messages yet ...';
         }
       }
     );

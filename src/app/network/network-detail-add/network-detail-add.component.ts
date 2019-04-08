@@ -45,7 +45,7 @@ export class NetworkDetailAddComponent implements OnInit {
       this.openSnackBar('Invalid name for network ' + this.network.name, '');
     }else if (!this.network.type) {
       this.openSnackBar('Please selct type of network', '');
-    } else if (!this.files && this.network.type.name !== 'image_classification') {
+    } else if (!this.files && this.network.type.trainType !== 0) {
       this.openSnackBar('No train files provided', '');
     } else {
 
@@ -57,7 +57,7 @@ export class NetworkDetailAddComponent implements OnInit {
             this.networkService.postNetworkParameterData(this.network, this.files[0]).subscribe();
           }
 
-          if (this.network.type.name === 'log_classification' && this.networkParameter) {
+          if (this.network.type.name === 'log classification' && this.networkParameter) {
             const networkParam = new NetworkParameter();
             networkParam.name = 'DATA_PATTERN';
             networkParam.abbreviation = 'DATA_PATTERN';

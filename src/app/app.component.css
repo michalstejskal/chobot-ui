@@ -48,8 +48,9 @@ html {
 
 .navigation {
   position: absolute;
+  font-size: 115%;
   top: 17%;
-  left: 20%;
+  left: 40pt;
 }
 
 .navigation_container {
@@ -66,9 +67,9 @@ html {
 
 
 .logo {
-  width: 80px;
-  left: 15%;
-  top: 5%;
+  width: 100px;
+  left: 30pt;
+  top: 2%;
   position: absolute;
 }
 

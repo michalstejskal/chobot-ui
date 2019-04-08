@@ -3,4 +3,5 @@ export class NetworkType {
   public name: string;
   public description: string;
   public classes: string;
+  public trainType: number;
 }

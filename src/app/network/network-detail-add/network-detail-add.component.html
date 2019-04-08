@@ -20,16 +20,14 @@
 
       <div *ngIf="network.type != null">
         <div class="edit-container" *ngIf="network.type != null">
-          <mat-form-field
-            *ngIf="network.type.name != 'image_classification'">
+          <mat-form-field *ngIf="network.type.trainType != 0">
             <input matInput placeholder="training data file" [(ngModel)]="hidden" [disabled]=true>
-            <button mat-flat-button (click)="inputFile.click()" [disabled]="trainingData.length != 0">Import file
-            </button>
+            <button mat-flat-button (click)="inputFile.click()" [disabled]="trainingData.length != 0">Import file</button>
             {{ inputFile.value }}
           </mat-form-field>
           <input #inputFile type="file" (change)="onChange($event)" [style.display]="'none'">
 
-          <mat-form-field *ngIf="network.type.name == 'log_classification'">
+          <mat-form-field *ngIf="network.type.trainType == 2">
             <input matInput placeholder="log parse pattern" [(ngModel)]="networkParameter">
           </mat-form-field>
 
@@ -73,56 +71,44 @@
 
 
     <div class="network_data_advice" *ngIf="network.type != null && network.type.name == 'chatbot'">
-
-      <!--<mat-form-field>-->
-        <!--<input matInput placeholder="network type" value="chatbot" readonly="true" class="disabled_show">-->
-      <!--</mat-form-field>-->
-
       <div class="logs" style="min-height: 80vh ;max-height: 80vh;">
         <mat-form-field class="logs-disabled_show">
-          <textarea autosize matInput [value]="networkAdvice.chatbotIntents" [disabled]="true" class="disabled-logs"></textarea>
+          <textarea autosize matInput [value]="networkAdvice.chatbotIntents" [disabled]="true"
+                    class="disabled-logs"></textarea>
         </mat-form-field>
       </div>
     </div>
 
-    <div class="network_data_advice" *ngIf="network.type != null && network.type.name == 'log_classification'">
-      <!--<mat-form-field>-->
-        <!--<input matInput placeholder="network type" value="logs" readonly="true" class="disabled_show">-->
-      <!--</mat-form-field>-->
-
+    <div class="network_data_advice" *ngIf="network.type != null && network.type.name == 'log classification'">
       <div class="logs" style="min-height: 80vh ;max-height: 80vh;">
         <mat-form-field class="logs-disabled_show">
-          <textarea autosize matInput [value]="networkAdvice.logsData" [disabled]="true" class="disabled-logs"></textarea>
+          <textarea autosize matInput [value]="networkAdvice.logsData" [disabled]="true"
+                    class="disabled-logs"></textarea>
         </mat-form-field>
         <div style="padding-bottom: 10px"></div>
         <mat-form-field class="logs-disabled_show" style="padding-top: 10pt">
-          <textarea autosize matInput [value]="networkAdvice.logsPatter" [disabled]="true" class="disabled-logs"></textarea>
+          <textarea autosize matInput [value]="networkAdvice.logsPatter" [disabled]="true"
+                    class="disabled-logs"></textarea>
         </mat-form-field>
       </div>
     </div>
 
-    <div class="network_data_advice" *ngIf="network.type != null && network.type.name == 'image custom classification'">
-
-      <!--<mat-form-field>-->
-        <!--<input matInput placeholder="network type" value="imagess" readonly="true" class="disabled_show">-->
-      <!--</mat-form-field>-->
-
+    <div class="network_data_advice"
+         *ngIf="network.type != null && (network.type.name == 'image custom classification' || network.type.name == 'image classification - automl ')">
       <div class="logs" style="min-height: 80vh ;max-height: 80vh;">
         <mat-form-field class="logs-disabled_show">
-          <textarea autosize matInput [value]="networkAdvice.imagesStructure" [disabled]="true" class="disabled-logs"></textarea>
+          <textarea autosize matInput [value]="networkAdvice.imagesStructure" [disabled]="true"
+                    class="disabled-logs"></textarea>
         </mat-form-field>
       </div>
     </div>
 
-    <div class="network_data_advice" *ngIf="network.type != null && network.type.name == 'image classification'">
-
-      <!--<mat-form-field>-->
-      <!--<input matInput placeholder="network type" value="chatbot" readonly="true" class="disabled_show">-->
-      <!--</mat-form-field>-->
-
+    <div class="network_data_advice"
+         *ngIf="network.type != null && (network.type.name == 'image classification' || network.type.name == 'sentiment analysis - automl pretrained' || network.type.name == 'object detection - automl pretrained' || network.type.name == 'topic detection - automl pretrained')">
       <div class="logs" style="min-height: 80vh ;max-height: 80vh;">
         <mat-form-field class="logs-disabled_show">
-          <textarea autosize matInput value="no train data needed" [disabled]="true" class="disabled-logs"></textarea>
+          <textarea autosize matInput value="no train data is needed" [disabled]="true"
+                    class="disabled-logs"></textarea>
         </mat-form-field>
       </div>
     </div>
