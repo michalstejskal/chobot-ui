@@ -54,7 +54,7 @@ export class ModuleDetailAddComponent implements OnInit {
     } else {
       this.module.code = btoa(this.module.code);
       this.moduleService.postModule(this.module, this.idNetwork).subscribe(module => {
-          this.openSnackBar('Module ' + this.module.name + ' saved', '');
+          this.openSnackBar('Module ' + this.module.name + ' saved. Please wait for image creating ~5 minutes.', '');
           this.router.navigateByUrl('/networks/' + this.idNetwork + '/modules/show/' + module.id);
         }
       );
@@ -63,7 +63,7 @@ export class ModuleDetailAddComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 2000,
+      duration: 8000,
     });
   }
 
